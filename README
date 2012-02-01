@@ -1,0 +1,4 @@
+cp Cammino_Banners.csv app/locale/pt_BR/
+cp Cammino_Banners.xml app/etc/modules/
+cp cammino_banners.css skin/adminhtml/default/default/
+cp banners.xml app/design/adminhtml/default/default/layout/

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config>
+	<sections>
+		<cms>
+			<groups>
+						
+				<banners translate="label" module="banners">
+					<label>Banners Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<areas translate="label">
+							<label>Areas</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</areas>
+					</fields>
+				</banners>
+				
+			</groups>
+		</cms>
+	</sections>
+</config>
