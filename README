@@ -1,3 +1,7 @@
+INSTALL (for git)
+
+mkdir app/code/community/Cammino
+git submodule add git@github.com:mferracioli/magento-banners.git app/code/community/Cammino/Banners
 cp Cammino_Banners.csv app/locale/pt_BR/
 cp Cammino_Banners.xml app/etc/modules/
 cp cammino_banners.css skin/adminhtml/default/default/
