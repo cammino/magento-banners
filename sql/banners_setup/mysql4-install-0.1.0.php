@@ -14,7 +14,10 @@ CREATE TABLE {$this->getTable('banners')} (
   `subtitle` varchar(255) NOT NULL default '',
   `url` varchar(255) NOT NULL default '',
   `filename` varchar(255) NOT NULL default '',
+  `filename_responsive` varchar(255) NOT NULL default '',
   `status` smallint(6) NOT NULL default '0',
+  `start_at` datetime NULL,
+  `end_at` datetime NULL,
   `created_time` datetime NULL,
   `update_time` datetime NULL,
   PRIMARY KEY (`banners_id`)

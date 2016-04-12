@@ -8,12 +8,19 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
 		$this->setForm($form);
 		$fieldset = $form->addFieldset('banners_form', array('legend'=>Mage::helper('banners')->__('Item Information')));
 		$preview = '';
+		$preview2 = '';
 
 		if(Mage::registry('banners_data')) {
 			$data = Mage::registry('banners_data')->getData();
 			$path = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "banners/" . $data["filename"];
+			$path2 = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "banners/" . $data["filename_responsive"];
 			$preview = '<div class="banner-preview"><img src="'. $path .'" /></div>';
+			$preview2 = '<div class="banner-preview"><img src="'. $path2 .'" /></div>';
 		}
+
+        $dateFormatIso = Mage::app()->getLocale()->getDateFormat(
+        	Mage_Core_Model_Locale::FORMAT_TYPE_SHORT
+        );
 
 		// $fieldset->addField('area', 'text', array(
 		// 	'label'     => Mage::helper('banners')->__('Area'),
@@ -35,10 +42,10 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
 			'name'      => 'title'
 		));
 
-		$fieldset->addField('subtitle', 'text', array(
-			'label'     => Mage::helper('banners')->__('Sub-Title'),
-			'name'      => 'subtitle'
-		));
+		// $fieldset->addField('subtitle', 'text', array(
+		// 	'label'     => Mage::helper('banners')->__('Sub-Title'),
+		// 	'name'      => 'subtitle'
+		// ));
 		
 		$fieldset->addField('url', 'text', array(
 			'label'     => Mage::helper('banners')->__('Url'),
@@ -68,6 +75,31 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
 			'required'	=> false,
 			'name'		=> 'filename',
 			'after_element_html' => $preview,
+		));
+
+		$fieldset->addField('filename_responsive', 'file', array(
+			'label'		=> Mage::helper('banners')->__('Responsive File'),
+			'required'	=> false,
+			'name'		=> 'filename_responsive',
+			'after_element_html' => $preview2,
+		));
+
+		$fieldset->addField('start_at', 'date', array(
+			'label'		=> Mage::helper('banners')->__('Start at'),
+			'required'	=> false,
+			'name'		=> 'start_at',
+			'format'    => $dateFormatIso,
+            'image'     => $this->getSkinUrl('images/grid-cal.gif'),
+            'class'     => 'date-range-custom_theme-from'
+		));
+
+		$fieldset->addField('end_at', 'date', array(
+			'label'		=> Mage::helper('banners')->__('End at'),
+			'required'	=> false,
+			'name'		=> 'end_at',
+			'format'    => $dateFormatIso,
+            'image'     => $this->getSkinUrl('images/grid-cal.gif'),
+            'class'     => 'date-range-custom_theme-from'
 		));
      
 		if (Mage::getSingleton('adminhtml/session')->getBannersData()) {

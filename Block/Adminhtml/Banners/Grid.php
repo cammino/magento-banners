@@ -41,11 +41,11 @@ class Cammino_Banners_Block_Adminhtml_Banners_Grid extends Mage_Adminhtml_Block_
 			'index'     => 'area',
 		));
 		
-		$this->addColumn('filename', array(
-			'header'    => Mage::helper('banners')->__('File'),
-			'align'     =>'left',
-			'index'     => 'filename',
-		));
+		// $this->addColumn('filename', array(
+		// 	'header'    => Mage::helper('banners')->__('File'),
+		// 	'align'     =>'left',
+		// 	'index'     => 'filename',
+		// ));
 
 		$this->addColumn('status', array(
 			'header'    => Mage::helper('banners')->__('Status'),

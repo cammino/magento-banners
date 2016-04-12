@@ -74,15 +74,43 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
 		      
 		        }
 	        
-		        //this way the name is saved in DB
 	  			$data['filename'] = $_FILES['filename']['name'];
 			}
+
+			if(isset($_FILES['filename_responsive']['name']) && $_FILES['filename_responsive']['name'] != '') {
+				try {
+					$uploader = new Varien_File_Uploader('filename_responsive');
+	           		$uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
+					$uploader->setAllowRenameFiles(false);
+					$uploader->setFilesDispersion(false);
+
+					$path = Mage::getBaseDir('media') . DS . "banners" ;
+					
+					mkdir($path);
+					
+					$uploader->save($path, $_FILES['filename_responsive']['name']);
+					
+				} catch (Exception $e) {
+		      
+		        }
+	        
+	  			$data['filename_responsive'] = $_FILES['filename_responsive']['name'];
+			}
 	  		
-			//print_r($data);
-	  			
+			$data = $this->_filterDates($data, array('start_at', 'end_at'));
+
 			$model = Mage::getModel('banners/banners');		
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
+
+			if (!empty($data['start_at'])) {
+				$date = Mage::app()->getLocale()->date($data['start_at'], Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
+				$model->setStartAtDate($date->toString('YYYY-MM-dd HH:mm:ss'));
+			}
+			if (!empty($data['end_at'])) {
+				$date = Mage::app()->getLocale()->date($data['end_at'], Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
+				$model->setEndAtDate($date->toString('YYYY-MM-dd HH:mm:ss'));
+			}
 			
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
