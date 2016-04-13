@@ -12,4 +12,41 @@ class Cammino_Banners_Model_Banners extends Mage_Core_Model_Abstract
 		$path = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "banners/" . $this->filename;
 		return $path;
 	}
+
+	/**
+	* Retorna Objeto com os banners ou Nulo caso nao encontre nenhum banner.
+	* @var $type String
+	* @var $storeId Integer
+	* @return Object|Null
+	**/
+	public function getSlides($area = "")
+	{
+		
+    $now 	 = date('Y-m-d');
+		$model = Mage::getModel('banners/banners');
+		
+		$slides = $model->getCollection()
+      ->addFieldToSelect('*')
+      ->addFieldToFilter('status', 1);
+
+		
+    if (!empty($area)) {
+      $slides->addFieldToFilter('area', $area);
+    }
+
+    $slides->addFieldToFilter( 'start_at', 
+      array(
+        array( 'lteq' => $now ),
+        array( 'null' => true )
+      )
+    )
+		->addFieldToFilter( 'end_at',
+      array(
+        array('gteq' => $now),
+        array( 'null' => true )
+      )
+    );
+
+		return (count($slides) > 0) ? $slides : NULL;
+	}
 }
