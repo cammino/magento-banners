@@ -19,7 +19,7 @@ class Cammino_Banners_Model_Banners extends Mage_Core_Model_Abstract
 	* @var $storeId Integer
 	* @return Object|Null
 	**/
-	public function getSlides($area = "")
+	public function getSlides($area = "", $limit = "")
 	{
 		
     $now 	 = date('Y-m-d');
@@ -27,12 +27,14 @@ class Cammino_Banners_Model_Banners extends Mage_Core_Model_Abstract
 		
 		$slides = $model->getCollection()
       ->addFieldToSelect('*')
-      ->addFieldToFilter('status', 1);
+      ->addFieldToFilter('status', 1)
+      ->setOrder('created_time', 'desc');
 
-		
+    
     if (!empty($area)) {
       $slides->addFieldToFilter('area', $area);
     }
+
 
     $slides->addFieldToFilter( 'start_at', 
       array(
@@ -40,12 +42,19 @@ class Cammino_Banners_Model_Banners extends Mage_Core_Model_Abstract
         array( 'null' => true )
       )
     )
-		->addFieldToFilter( 'end_at',
+    ->addFieldToFilter( 'end_at',
       array(
         array('gteq' => $now),
         array( 'null' => true )
       )
     );
+    
+
+    if (!empty($limit)) {
+      $slides->setPageSize($limit)
+             ->setCurPage(1);
+    }
+
 
 		return (count($slides) > 0) ? $slides : NULL;
 	}
