@@ -21,7 +21,9 @@ class Cammino_Banners_Block_Adminhtml_Banners_Grid extends Mage_Adminhtml_Block_
 
 	protected function _prepareColumns()
 	{
-	
+		
+		$dateFormatIso = Mage::app()->getLocale()->getDateFormat( Mage_Core_Model_Locale::FORMAT_TYPE_SHORT );
+
 		$this->addColumn('banners_id', array(
 			'header'    => Mage::helper('banners')->__('ID'),
 			'align'     =>'right',
@@ -54,11 +56,34 @@ class Cammino_Banners_Block_Adminhtml_Banners_Grid extends Mage_Adminhtml_Block_
 			'index'     => 'status',
 			'type'      => 'options',
 			'options'   => array(
-				1 => 'Enabled',
-				2 => 'Disabled',
+				1 => Mage::helper('banners')->__('Enabled'),
+				2 => Mage::helper('banners')->__('Disabled'),
 			),
 		));
-	  
+
+		$this->addColumn('start_at', array(
+			'header'    => Mage::helper('banners')->__('Start at'),
+			'align'     =>'left',
+			'type'      => 'date',
+			'format'    => $dateFormatIso,
+			'index'     => 'start_at'
+		));
+
+		$this->addColumn('end_at', array(
+			'header'    => Mage::helper('banners')->__('End at'),
+			'align'     =>'left',
+			'type'      => 'date',
+			'format'    => $dateFormatIso,
+			'index'     => 'end_at',
+		));
+
+		$this->addColumn('order', array(
+			'header'    => Mage::helper('banners')->__('Order'),
+			'align'     =>'left',
+			'index'     => 'order'
+		));
+
+
 		$this->addColumn('action',
 			array(
 				'header'    =>  Mage::helper('banners')->__('Action'),
