@@ -12,22 +12,20 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
 
 		if(Mage::registry('banners_data')) {
 			$data = Mage::registry('banners_data')->getData();
-			$path = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "banners/" . $data["filename"];
-			$path2 = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "banners/" . $data["filename_responsive"];
-			$preview = '<div class="banner-preview"><img src="'. $path .'" /></div>';
-			$preview2 = '<div class="banner-preview"><img src="'. $path2 .'" /></div>';
+
+			if ($data) {
+				$path = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "banners/" . $data["filename"];
+				$path2 = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "banners/" . $data["filename_responsive"];
+				$preview = $data["filename"] ? '<div class="banner-preview"><img src="'. $path .'" /></div>' : '';
+				$preview2 = $data["filename_responsive"] ? '<div class="banner-preview"><img src="'. $path2 .'" /></div>' : '';
+			}
+
 		}
 
         $dateFormatIso = Mage::app()->getLocale()->getDateFormat(
         	Mage_Core_Model_Locale::FORMAT_TYPE_SHORT
         );
 
-		// $fieldset->addField('area', 'text', array(
-		// 	'label'     => Mage::helper('banners')->__('Area'),
-		// 	'class'     => 'required-entry',
-		// 	'required'  => true,
-		// 	'name'      => 'area'
-		// ));
 		
 		$fieldset->addField('area', 'select', array(
 			'label'     => Mage::helper('banners')->__('Area'),

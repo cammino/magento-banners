@@ -70,9 +70,7 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
 					
 					$uploader->save($path, $_FILES['filename']['name']);
 					
-				} catch (Exception $e) {
-		      
-		        }
+				} catch (Exception $e) {}
 	        
 	  			$data['filename'] = $_FILES['filename']['name'];
 			}
@@ -90,19 +88,22 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
 					
 					$uploader->save($path, $_FILES['filename_responsive']['name']);
 					
-				} catch (Exception $e) {
-		      
-		        }
+				} catch (Exception $e) {}
 	        
 	  			$data['filename_responsive'] = $_FILES['filename_responsive']['name'];
 			}
-	  		
+
 			$data = $this->_filterDates($data, array('start_at', 'end_at'));
+			
+			// FIX BUG VERSION 1.5
+			// Ao mandar uma variavel vazia estava salvando o valor no banco de 0000-00-00 00:00:00, entao caso for vazio forçamos o valor NULL.
+			$data['start_at'] = empty($data['start_at']) ? NULL : $data['start_at'];
+			$data['end_at']   = empty($data['end_at']) ? NULL : $data['end_at'];
 
 			$model = Mage::getModel('banners/banners');		
 			$model->setData($data)
 				->setId($this->getRequest()->getParam('id'));
-
+			
 			if (!empty($data['start_at'])) {
 				$date = Mage::app()->getLocale()->date($data['start_at'], Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
 				$model->setStartAtDate($date->toString('YYYY-MM-dd HH:mm:ss'));
