@@ -28,7 +28,7 @@ class Cammino_Banners_Model_Banners extends Mage_Core_Model_Abstract
 		$slides = $model->getCollection()
       ->addFieldToSelect('*')
       ->addFieldToFilter('status', 1)
-      ->setOrder('order', 'asc');
+      ->setOrder('banner_order', 'asc');
 
     
     if (!empty($area)) {

@@ -16,11 +16,11 @@ CREATE TABLE {$this->getTable('banners')} (
   `filename` varchar(255) NOT NULL default '',
   `filename_responsive` varchar(255) NOT NULL default '',
   `status` smallint(6) NOT NULL default '0',
-  `order` int(11) NOT NULL default '0',
   `start_at` datetime NULL,
   `end_at` datetime NULL,
   `created_time` datetime NULL,
   `update_time` datetime NULL,
+  `banner_order` int(11) NOT NULL default '0',
   PRIMARY KEY (`banners_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

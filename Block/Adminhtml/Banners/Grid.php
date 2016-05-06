@@ -77,10 +77,10 @@ class Cammino_Banners_Block_Adminhtml_Banners_Grid extends Mage_Adminhtml_Block_
 			'index'     => 'end_at',
 		));
 
-		$this->addColumn('order', array(
+		$this->addColumn('banner_order', array(
 			'header'    => Mage::helper('banners')->__('Order'),
 			'align'     =>'left',
-			'index'     => 'order'
+			'index'     => 'banner_order'
 		));
 
 

@@ -100,11 +100,11 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
             'class'     => 'date-range-custom_theme-from'
 		));
 
-		$fieldset->addField('order', 'text', array(
+		$fieldset->addField('banner_order', 'text', array(
 			'label'		=> Mage::helper('banners')->__('Order'),
 			'class'     => 'validate-number',
 			'required'	=> false,
-			'name'		=> 'order'
+			'name'		=> 'banner_order'
 		));
      
 		if (Mage::getSingleton('adminhtml/session')->getBannersData()) {
