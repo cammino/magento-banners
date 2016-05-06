@@ -99,6 +99,13 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
             'image'     => $this->getSkinUrl('images/grid-cal.gif'),
             'class'     => 'date-range-custom_theme-from'
 		));
+
+		$fieldset->addField('order', 'text', array(
+			'label'		=> Mage::helper('banners')->__('Order'),
+			'class'     => 'validate-number',
+			'required'	=> false,
+			'name'		=> 'order'
+		));
      
 		if (Mage::getSingleton('adminhtml/session')->getBannersData()) {
 			$form->setValues(Mage::getSingleton('adminhtml/session')->getBannersData());
