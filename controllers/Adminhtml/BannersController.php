@@ -64,9 +64,12 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
 					$uploader->setAllowRenameFiles(false);
 					$uploader->setFilesDispersion(false);
 
-					$path = Mage::getBaseDir('media') . DS . "banners" ;
-					
-					mkdir($path);
+					$path = Mage::getBaseDir('media') . DS . "banners";
+
+					// check if this directory exists, if is negative the directory is created.
+					if (!is_dir($path)) {
+						mkdir($path);
+					}
 					
 					$uploader->save($path, $_FILES['filename']['name']);
 					
