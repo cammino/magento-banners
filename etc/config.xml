@@ -45,11 +45,11 @@
     <adminhtml>
 		<translate>
 			<modules>
-				<translations>
+				<Cammino_Banners>
 					<files>
 						<default>Cammino_Banners.csv</default>
 					</files>
-				</translations>
+				</Cammino_Banners>
 			</modules>
 		</translate>
 		<menu>
