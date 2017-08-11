@@ -20,8 +20,7 @@ class Cammino_Banners_Block_Adminhtml_Banners_Grid extends Mage_Adminhtml_Block_
 	}
 
 	protected function _prepareColumns()
-	{
-		
+	{		
 		$dateFormatIso = Mage::app()->getLocale()->getDateFormat( Mage_Core_Model_Locale::FORMAT_TYPE_SHORT );
 
 		$this->addColumn('banners_id', array(
@@ -30,6 +29,26 @@ class Cammino_Banners_Block_Adminhtml_Banners_Grid extends Mage_Adminhtml_Block_
 			'width'     => '50px',
 			'index'     => 'banners_id',
 		));
+
+		$this->addColumn('filename', array(
+        	'header'    => Mage::helper('banners')->__('Image'),
+			'align'     =>'left',
+			'width'     => '150px',
+			'index'     => 'filename',
+			'filter'    => false,
+			'sortable'  => false,
+			'renderer'  => 'banners/adminhtml_banners_renderer'
+      	));
+
+      	$this->addColumn('filename_responsive', array(
+        	'header'    => Mage::helper('banners')->__('Responsive'),
+			'align'     =>'left',
+			'width'     => '80px',
+			'index'     => 'filename_responsive',
+			'filter'    => false,
+			'sortable'  => false,
+			'renderer'  => 'banners/adminhtml_banners_renderer'
+      	));
 
 		$this->addColumn('title', array(
 			'header'    => Mage::helper('banners')->__('Title'),
@@ -80,23 +99,43 @@ class Cammino_Banners_Block_Adminhtml_Banners_Grid extends Mage_Adminhtml_Block_
 		$this->addColumn('banner_order', array(
 			'header'    => Mage::helper('banners')->__('Order'),
 			'align'     =>'left',
+			'width'     => '50px',
 			'index'     => 'banner_order'
-		));
-
+		));		
 
 		$this->addColumn('action',
 			array(
-				'header'    =>  Mage::helper('banners')->__('Action'),
-				'width'     => '100',
-				'type'      => 'action',
-				'getter'    => 'getId',
-				'actions'   => array(
-					array(
-						'caption'   => Mage::helper('banners')->__('Edit'),
-						'url'       => array('base'=> '*/*/edit'),
-						'field'     => 'id'
-					)
-				),
+				'header'   =>  Mage::helper('banners')->__('Edit'),
+				'width'    => '100',
+				'type'     => 'action',
+				'getter'   => 'getId',
+				'actions'  => array(
+		            array(
+		            	'caption' => Mage::helper('banners')->__('Edit'),
+		                'url'     => array('base'=> '*/*/edit'),
+		                'field'   => 'id'
+		            )
+		        ),
+			'filter'    => false,
+			'sortable'  => false,
+			'index'     => 'stores',
+			'is_system' => true,
+		));
+
+		$this->addColumn('action_remove',
+			array(
+				'header'  =>  Mage::helper('banners')->__('Remove'),
+				'width'   => '100',
+				'type'    => 'action',
+				'getter'  => 'getId',
+				'actions' => array(
+		            array(
+		            	'caption' => Mage::helper('banners')->__('Remove'),
+		                'url'     => array('base'=> '*/*/delete'),
+		                'field'   => 'id',
+		                'confirm' => 'Você tem certeza que deseja remover o banner?'
+		            )
+		        ),
 			'filter'    => false,
 			'sortable'  => false,
 			'index'     => 'stores',

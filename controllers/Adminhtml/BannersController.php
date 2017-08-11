@@ -54,10 +54,15 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
 		$this->_forward('edit');
 	}
  
+ 	// Save event
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
 			
-			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
+			// Date (Timestamp)
+			$now = Mage::getModel('core/date')->timestamp(time());
+
+			// Save default image
+			if(isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {	
 				try {
 					$uploader = new Varien_File_Uploader('filename');
 	           		$uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
@@ -66,18 +71,28 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
 
 					$path = Mage::getBaseDir('media') . DS . "banners";
 
-					// check if this directory exists, if is negative the directory is created.
+					// Check if this directory exists, if is negative the directory is created.
 					if (!is_dir($path)) {
 						mkdir($path);
 					}
-					
-					$uploader->save($path, $_FILES['filename']['name']);
-					
+
+					// Capturing the image's extension and url
+					// Removing all special characters and blank spaces
+					// And including time stamp to file name
+					$ext = '.' . end(explode('.', $_FILES['filename']['name']));
+					$baseFilename = str_replace($ext, '', $_FILES['filename']['name']) . '-' . $now;
+					$filename = Mage::getModel('catalog/product_url')->formatUrlKey($baseFilename) . $ext;
+		            $uploader->save($path, $filename);
+		            $data['filename'] = $filename;
+
+					// $uploader->save($path, $_FILES['filename']['name']);
+
 				} catch (Exception $e) {}
-	        
-	  			$data['filename'] = $_FILES['filename']['name'];
+
+	  			// $data['filename'] = $_FILES['filename']['name'];
 			}
 
+			// Save responsive image
 			if(isset($_FILES['filename_responsive']['name']) && $_FILES['filename_responsive']['name'] != '') {
 				try {
 					$uploader = new Varien_File_Uploader('filename_responsive');
@@ -89,11 +104,20 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
 					
 					mkdir($path);
 					
-					$uploader->save($path, $_FILES['filename_responsive']['name']);
+					// Capturing the image's extension and url
+					// Removing all special characters and blank spaces
+					// And including time stamp to file name
+					$ext = '.' . end(explode('.', $_FILES['filename_responsive']['name']));
+					$baseFilename = str_replace($ext, '', $_FILES['filename_responsive']['name']) . '-' . $now;
+					$filename = Mage::getModel('catalog/product_url')->formatUrlKey($baseFilename) . $ext;
+		            $uploader->save($path, $filename);
+		            $data['filename_responsive'] = $filename;
+
+					// $uploader->save($path, $_FILES['filename_responsive']['name']);
 					
 				} catch (Exception $e) {}
 	        
-	  			$data['filename_responsive'] = $_FILES['filename_responsive']['name'];
+	  			// $data['filename_responsive'] = $_FILES['filename_responsive']['name'];
 			}
 
 			$data = $this->_filterDates($data, array('start_at', 'end_at'));
