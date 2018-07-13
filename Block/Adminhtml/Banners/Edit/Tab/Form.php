@@ -33,6 +33,20 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
 			'values'    => $this->getAreas()
 		));
 
+
+		$fieldset->addField('category', 'multiselect', array(
+				'label'     => 'Categoria',
+                'name'      => 'category',
+                'values'    => $this->getCategories(true),
+                'display'   => 'none'
+            ), 'area');
+
+		$this->setChild('form_after', $this->getLayout()->createBlock('adminhtml/widget_form_element_dependence')
+                ->addFieldMap("area", 'area')
+                ->addFieldMap("category", 'category')
+                ->addFieldDependence('category', 'area', 'category')
+            );
+
 		$fieldset->addField('title', 'text', array(
 			'label'     => Mage::helper('banners')->__('Title'),
 			'class'     => 'required-entry',
@@ -124,8 +138,40 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
 		foreach($values as $value) {
 			$areas[] = array('value' => $value, 'label' => $value);
 		}
+		$areas[] = array('value' => 'category', 'label' => 'categoria');
 		
 		return $areas;
 	}
-	
+
+	private function getCategories($optionList = false) {
+		$categoriesArray = Mage::getModel('catalog/category')
+        ->getCollection()
+        ->addAttributeToSelect('name')
+        ->addAttributeToSort('path', 'asc')
+        ->addFieldToFilter('is_active', array('eq'=>'1'))
+        ->load()
+        ->toArray();
+ 
+		if (!$optionList) {
+			return $categoriesArray;
+		}
+ 
+		foreach ($categoriesArray as $categoryId => $category) {
+			if (isset($category['name'])) {
+				
+				$space = '';
+        		for($i=1; $i < $category['level']; $i++){
+            		$space = $space."--";
+        		}
+        		
+        		$categoryName = $space. " " .$category['name'];
+
+				$categories[] = array(
+                	'value' => $categoryId,
+                	'label' => $categoryName
+            	);
+        	}
+    	}
+    	return $categories;
+	}	
 }

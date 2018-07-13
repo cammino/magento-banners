@@ -140,6 +140,12 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
 				$model->setEndAtDate($date->toString('YYYY-MM-dd HH:mm:ss'));
 			}
 			
+			$categories = "";
+			foreach ($data['category'] as $category) {
+				$categories .= $category . ",";
+			}
+			$model->setCategories($categories);
+
 			try {
 				if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
 					$model->setCreatedTime(now())
