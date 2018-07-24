@@ -34,11 +34,12 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
 		));
 
 
-		$fieldset->addField('category', 'multiselect', array(
+		$fieldset->addField('categories', 'multiselect', array(
 				'label'     => 'Categoria',
                 'name'      => 'category',
                 'values'    => $this->getCategories(true),
-                'display'   => 'none'
+                'display'   => 'none',
+                'required'  => false
             ), 'area');
 
 		$this->setChild('form_after', $this->getLayout()->createBlock('adminhtml/widget_form_element_dependence')
