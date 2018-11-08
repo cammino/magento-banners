@@ -41,7 +41,10 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
 			
 			$this->_addContent($this->getLayout()->createBlock('banners/adminhtml_banners_edit'))
 				->_addLeft($this->getLayout()->createBlock('banners/adminhtml_banners_edit_tabs'));
-
+				if(Mage::getSingleton('fpc/fpc')){
+					Mage::getSingleton('fpc/fpc')->clean();
+		            Mage::getSingleton('fpc/fpc')->getFrontend()->clean(Zend_Cache::CLEANING_MODE_OLD);
+		        }
 			$this->renderLayout();
 			
 		} else {
@@ -84,7 +87,10 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
 					$filename = Mage::getModel('catalog/product_url')->formatUrlKey($baseFilename) . $ext;
 		            $uploader->save($path, $filename);
 		            $data['filename'] = $filename;
-
+		            if(Mage::getSingleton('fpc/fpc')){
+						Mage::getSingleton('fpc/fpc')->clean();
+			            Mage::getSingleton('fpc/fpc')->getFrontend()->clean(Zend_Cache::CLEANING_MODE_OLD);
+			        }
 					// $uploader->save($path, $_FILES['filename']['name']);
 
 				} catch (Exception $e) {}
@@ -184,6 +190,10 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
 					->delete();
 					 
 				Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('banners')->__('Item was successfully deleted'));
+				if(Mage::getSingleton('fpc/fpc')){
+					Mage::getSingleton('fpc/fpc')->clean();
+		            Mage::getSingleton('fpc/fpc')->getFrontend()->clean(Zend_Cache::CLEANING_MODE_OLD);
+		        }
 				$this->_redirect('*/*/');
 			} catch (Exception $e) {
 				Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
