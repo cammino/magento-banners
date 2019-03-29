@@ -46,7 +46,7 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
             array(
             'label' => Mage::helper('banners')->__('Area'),
             'name'  => 'area',
-            'values'    => $this->getAreas())
+            'values'    => $this->_getAreas())
         );
 
         $fieldset->addField(
@@ -55,7 +55,7 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
             array(
             'label'     => 'Categoria',
             'name'      => 'category',
-            'values'    => $this->getCategories(true),
+            'values'    => $this->_getCategories(true),
             'display'   => 'none',
             'required'  => false
             ),
