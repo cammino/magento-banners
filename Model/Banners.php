@@ -1,61 +1,83 @@
 <?php
+/**
+* Banners.php
+*
+* @category Cammino
+* @package  Cammino_Googlemerchant
+* @author   Cammino Digital <suporte@cammino.com.br>
+* @license  http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+* @link     https://github.com/cammino/magento-banners
+*/
 
 class Cammino_Banners_Model_Banners extends Mage_Core_Model_Abstract
 {
+    /**
+    * Function responsible for construct
+    *
+    * @return null
+    */
     public function _construct()
     {
         parent::_construct();
         $this->_init('banners/banners');
     }
 
-	public function getFilePath() {
-		$path = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "banners/" . $this->filename;
-		return $path;
-	}
-
-	/**
-	* Retorna Objeto com os banners ou Nulo caso nao encontre nenhum banner.
-	* @var $type String
-	* @var $storeId Integer
-	* @return Object|Null
-	**/
-	public function getSlides($area = "", $limit = "")
-	{
-		
-    $now 	 = date('Y-m-d');
-		$model = Mage::getModel('banners/banners');
-		
-		$slides = $model->getCollection()
-      ->addFieldToSelect('*')
-      ->addFieldToFilter('status', 1)
-      ->setOrder('banner_order', 'asc');
-
-    
-    if (!empty($area)) {
-      $slides->addFieldToFilter('area', $area);
+    /**
+    * Function responsible for get path files
+    *
+    * @return object
+    */
+    public function getFilePath()
+    {
+        $path = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "banners/" . $this->filename;
+        return $path;
     }
 
+    /**
+    * Function responsible for get slides
+    *
+    * @param object $area  Object param
+    *
+    * @param object $limit Object param
+    *
+    * @return string
+    */
+    public function getSlides($area = "", $limit = "")
+    {
+        $now    = date('Y-m-d');
+        $model  = Mage::getModel('banners/banners');
 
-    $slides->addFieldToFilter( 'start_at', 
-      array(
-        array( 'lteq' => $now ),
-        array( 'null' => true )
-      )
-    )
-    ->addFieldToFilter( 'end_at',
-      array(
-        array('gteq' => $now),
-        array( 'null' => true )
-      )
-    );
+        $slides = $model->getCollection()
+            ->addFieldToSelect('*')
+            ->addFieldToFilter('status', 1)
+            ->setOrder('banner_order', 'asc');
+
     
+        if (!empty($area)) {
+            $slides->addFieldToFilter('area', $area);
+        }
 
-    if (!empty($limit)) {
-      $slides->setPageSize($limit)
-             ->setCurPage(1);
+
+        $slides->addFieldToFilter(
+            'start_at',
+            array(
+            array( 'lteq' => $now ),
+            array( 'null' => true )
+            )
+        )
+            ->addFieldToFilter(
+                'end_at',
+                array(
+                array('gteq' => $now),
+                array( 'null' => true )
+                )
+            );
+
+        if (!empty($limit)) {
+            $slides->setPageSize($limit)
+                ->setCurPage(1);
+        }
+
+        return (count($slides) > 0) ? $slides : null;
     }
-
-
-		return (count($slides) > 0) ? $slides : NULL;
-	}
 }
