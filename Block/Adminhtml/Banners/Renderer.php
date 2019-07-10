@@ -20,7 +20,10 @@ class Cammino_Banners_Block_Adminhtml_Banners_Renderer extends Mage_Adminhtml_Bl
     */
     public function render(Varien_Object $row)
     {
-        if(empty($row->getData($this->getColumn()->getIndex()))) {
+        $index = $this->getColumn()->getIndex();
+        $rowData = $row->getData();
+
+        if(empty($rowData)) {
             return "<span></span>";
         } else {
             // Verify if the image is responsive or no
