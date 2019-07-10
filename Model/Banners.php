@@ -50,13 +50,11 @@ class Cammino_Banners_Model_Banners extends Mage_Core_Model_Abstract
         $slides = $model->getCollection()
             ->addFieldToSelect('*')
             ->addFieldToFilter('status', 1)
-            ->setOrder('banner_order', 'asc');
-
+            ->setOrder('banner_order', 'asc');        
     
         if (!empty($area)) {
             $slides->addFieldToFilter('area', $area);
         }
-
 
         $slides->addFieldToFilter(
             'start_at',
@@ -78,6 +76,29 @@ class Cammino_Banners_Model_Banners extends Mage_Core_Model_Abstract
                 ->setCurPage(1);
         }
 
-        return (count($slides) > 0) ? $slides : null;
+        $slidesArray = $slides->load();
+
+        // Filtra os banners se estiver com modo multi loja habilitado
+        if (!Mage::app()->isSingleStoreMode()) {
+            $actualStoreId = Mage::app()->getStore()->getId();
+            $filteredSlides = array();
+
+            foreach($slidesArray as $slide) {
+                if($slide->getStoreId() == NULL || $slide->getStoreId() == "" || $slide->getStoreId() == "0,") {
+                    $filteredSlides[] = $slide;
+                } else {
+                    $storesId = explode(",", $slide->getStoreId());
+                    foreach($storesId as $storeId) {
+                        if($actualStoreId == $storeId || $storeId == "0") {
+                            $filteredSlides[] = $slide;
+                        }
+                    }
+                }
+            }
+            return (count($filteredSlides) > 0) ? $filteredSlides : null;
+        } else {
+            return (count($slidesArray) > 0) ? $slidesArray : null;
+        }
+
     }
 }
