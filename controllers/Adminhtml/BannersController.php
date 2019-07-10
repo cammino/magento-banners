@@ -188,6 +188,13 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
             }
             $model->setCategories($categories);
 
+            $stores = "";
+            foreach ($data['stores'] as $store) {
+                $stores .= $store . ",";
+            }
+            $model->setStoreId($stores);
+
+
             try {
                 if ($model->getCreatedTime == null || $model->getUpdateTime() == null) {
                     $model->setCreatedTime(now())

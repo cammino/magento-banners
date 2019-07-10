@@ -40,6 +40,25 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
             Mage_Core_Model_Locale::FORMAT_TYPE_SHORT
         );
 
+
+        // Check is single store mode
+        if (!Mage::app()->isSingleStoreMode()) {
+            $fieldset->addField('store_id', 'multiselect', array(
+                'name'      => 'stores[]',
+                'label'     => Mage::helper('cms')->__('Store View'),
+                'title'     => Mage::helper('cms')->__('Store View'),
+                'required'  => true,
+                'values'    => Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true),
+            ));
+        }
+        else {
+            $fieldset->addField('store_id', 'hidden', array(
+                'name'      => 'stores[]',
+                'value'     => '0'
+            ));
+            // $data->setStoreId(Mage::app()->getStore(true)->getId());
+        }
+
         $fieldset->addField(
             'area',
             'select',
