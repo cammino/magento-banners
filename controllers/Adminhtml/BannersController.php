@@ -182,6 +182,12 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
                 $model->setEndAtDate($date->toString('YYYY-MM-dd HH:mm:ss'));
             }
 
+            $franchisors = "";
+            foreach ($data['franchisors'] as $franchiser) {
+                $franchisors .= $franchiser . ",";
+            }
+            $model->setFranchisors($franchisors);
+            
             $categories = "";
             foreach ($data['category'] as $category) {
                 $categories .= $category . ",";
