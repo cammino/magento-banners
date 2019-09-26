@@ -240,6 +240,11 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
         $collection->addFieldToSelect('*')->setOrder('name', 'asc')->load()->toArray();
         $franchisors = array();
 
+        $franchisors[] = array(
+            'value' => 'semfranquia',
+            'label' => 'SEM FRANQUIA (cliente não logado)'
+        );
+
         foreach ($collection as $franchiseId => $franchise) {
             $franchisors[] = array(
                 'value' => $franchiseId,
