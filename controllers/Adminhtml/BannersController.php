@@ -103,7 +103,7 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
             if (isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
                 try {
                     $uploader = new Varien_File_Uploader('filename');
-                    $uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
+                    $uploader->setAllowedExtensions(array('jpg','jpeg','gif','png','mp4','webm','ogg'));
                     $uploader->setAllowRenameFiles(false);
                     $uploader->setFilesDispersion(false);
 
@@ -136,7 +136,7 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
             if (isset($_FILES['filename_responsive']['name']) && $_FILES['filename_responsive']['name'] != '') {
                 try {
                     $uploader = new Varien_File_Uploader('filename_responsive');
-                    $uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
+                    $uploader->setAllowedExtensions(array('jpg','jpeg','gif','png','mp4','webm','ogg'));
                     $uploader->setAllowRenameFiles(false);
                     $uploader->setFilesDispersion(false);
 

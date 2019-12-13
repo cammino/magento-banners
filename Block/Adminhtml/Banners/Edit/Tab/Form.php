@@ -30,10 +30,29 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
             if ($data) {
                 $path = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "banners/" . $data["filename"];
                 $path2 = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "banners/" . $data["filename_responsive"];
-                $preview = $data["filename"] ? '<div class="banner-preview"><img src="'. $path .'" /></div>' : '';
-                $preview2 = $data["filename_responsive"] ? '<div class="banner-preview"><img src="'. $path2 .'" /></div>' : '';
-            }
 
+                // Desktop file (Check extension to see if is video or image)
+                $preview_file = $data['filename'];
+                $preview_file_ext = pathinfo($preview_file, PATHINFO_EXTENSION);
+
+                if ($preview_file_ext == "mp4" || $preview_file_ext == "webm" || $preview_file_ext == "ogg") {
+                    $preview = $data["filename"] ? '<div class="banner-preview"><video width="320" height="240" controls><source src="'. $path .'" type="video/' . $preview_file_ext . '"></video></div>' : '';
+                }
+                else {
+                    $preview = $data["filename"] ? '<div class="banner-preview"><img src="'. $path .'" /></div>' : '';
+                }
+                
+                // Mobile file (Check extension to see if is video or image)
+                $preview2_file = $data['filename_responsive'];
+                $preview2_file_ext = pathinfo($preview2_file, PATHINFO_EXTENSION);
+
+                if ($preview2_file_ext == "mp4" || $preview2_file_ext == "webm" || $preview2_file_ext == "ogg") {
+                    $preview2 = $data["filename_responsive"] ? '<div class="banner-preview"><video width="320" height="240" controls><source src="'. $path2 .'" type="video/' . $preview2_file_ext . '"></video></div>' : '';
+                }
+                else {
+                    $preview2 = $data["filename_responsive"] ? '<div class="banner-preview"><img src="'. $path2 .'" /></div>' : '';
+                }
+            }
         }
 
         $dateFormatIso = Mage::app()->getLocale()->getDateFormat(
