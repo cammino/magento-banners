@@ -11,6 +11,8 @@
 
 class Cammino_Banners_Model_Banners extends Mage_Core_Model_Abstract
 {
+    protected $_eventPrefix = 'banners_banners';
+
     /**
     * Function responsible for construct
     *
