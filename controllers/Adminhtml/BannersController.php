@@ -37,6 +37,11 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
         $this->_initAction()->renderLayout();
     }
 
+    protected function _isAllowed()
+{
+    return Mage::getSingleton('admin/session')->isAllowed('cms/banners');  
+}
+
     /**
     * Function responsible edit banner actions
     *
