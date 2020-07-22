@@ -47,17 +47,7 @@ class Cammino_Banners_Model_Banners extends Mage_Core_Model_Abstract
      */
     public function getSlides($area = "", $limit = "")
     {
-
-        $store = Mage::app()->getStore()->getStoreId();
-        $tz = Mage::app()->getLocale()->storeDate($store)->toString(Zend_Date::GMT_DIFF_SEP);
-        Mage::log((integer)$tz, null, 'system.log');
-
-        $now = Mage::app()->getLocale()->date()->get('YYYY-MM-dd HH:mm');
-        Mage::log($now, null, 'system.log');
-
-        $now = Mage::app()->getLocale()->date()->add((integer)$tz, Zend_Date::HOUR)->get('YYYY-MM-dd HH:mm');
-        Mage::log($now, null, 'system.log');
-
+        $now = Mage::app()->getLocale()->date()->get('YYYY-MM-dd');
         $model  = Mage::getModel('banners/banners');
 
         $slides = $model->getCollection()
