@@ -89,6 +89,19 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
         );
 
         $fieldset->addField(
+            'franchisors',
+            'multiselect',
+            array(
+                'label'     => 'Franquias',
+                'name'      => 'franchisors',
+                'values'    => $this->_getFranchisors(true),
+                'display'   => 'none',
+                'required'  => false
+            ),
+            'area'
+        );
+
+        $fieldset->addField(
             'categories',
             'multiselect', 
             array(
@@ -233,6 +246,32 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
             $areas[] = array('value' => 'category', 'label' => 'categoria');
 
         return $areas;
+    }
+
+    /**
+    * Function responsible to get franchisors list
+    *
+    * @return object
+    */
+    private function _getFranchisors()
+    {
+        $collection = Mage::getModel('franchiser/franchiser')->getCollection();
+        $collection->addFieldToSelect('*')->setOrder('name', 'asc')->load()->toArray();
+        $franchisors = array();
+
+        $franchisors[] = array(
+            'value' => 'semfranquia',
+            'label' => 'SEM FRANQUIA (cliente não logado)'
+        );
+
+        foreach ($collection as $franchiseId => $franchise) {
+            $franchisors[] = array(
+                'value' => $franchiseId,
+                'label' => $franchise["name"]
+            );
+        }
+
+        return $franchisors;
     }
 
     /**
