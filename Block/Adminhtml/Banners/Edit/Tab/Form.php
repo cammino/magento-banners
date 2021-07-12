@@ -198,6 +198,48 @@ class Cammino_Banners_Block_Adminhtml_Banners_Edit_Tab_Form extends Mage_Adminht
         );
 
         $fieldset->addField(
+            'contador_end_at',
+            'select',
+            array(
+            'label' => 'Horário de término',
+            'name'  => 'contador_end_at',
+            'values'    => array(
+                array('value' => '00:00', 'label' => '00:00',),
+                array('value' => '01:00', 'label' => '01:00',),
+                array('value' => '02:00', 'label' => '02:00',),
+                array('value' => '03:00', 'label' => '03:00',),
+                array('value' => '04:00', 'label' => '04:00',),
+                array('value' => '05:00', 'label' => '05:00',),
+                array('value' => '06:00', 'label' => '06:00',),
+                array('value' => '07:00', 'label' => '07:00',),
+                array('value' => '08:00', 'label' => '08:00',),
+                array('value' => '09:00', 'label' => '09:00',),
+                array('value' => '10:00', 'label' => '10:00',),
+                array('value' => '11:00', 'label' => '11:00',),
+                array('value' => '12:00', 'label' => '12:00',),
+                array('value' => '13:00', 'label' => '13:00',),
+                array('value' => '14:00', 'label' => '14:00',),
+                array('value' => '15:00', 'label' => '15:00',),
+                array('value' => '16:00', 'label' => '16:00',),
+                array('value' => '17:00', 'label' => '17:00',),
+                array('value' => '18:00', 'label' => '18:00',),
+                array('value' => '19:00', 'label' => '19:00',),
+                array('value' => '20:00', 'label' => '20:00',),
+                array('value' => '21:00', 'label' => '21:00',),
+                array('value' => '22:00', 'label' => '22:00',),
+                array('value' => '23:00', 'label' => '23:00',),
+            ),)
+        );
+
+        // Contador end at dependency area
+        $this->setChild('form_after', $this->getLayout()
+            ->createBlock('adminhtml/widget_form_element_dependence')
+                ->addFieldMap('area', 'area')
+                ->addFieldMap('contador_end_at', 'contador_end_at')
+                ->addFieldDependence('contador_end_at', 'area', 'contador') // 2 = 'Specified'
+            );
+
+        $fieldset->addField(
             'banner_order', 
             'text', 
             array(

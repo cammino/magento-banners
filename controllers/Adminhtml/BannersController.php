@@ -100,9 +100,9 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
     {
         // Save event
         if ($data = $this->getRequest()->getPost()) {
-
             // Date (Timestamp)
             $now = Mage::getModel('core/date')->timestamp(time());
+            // var_dump($data); die;
 
             // Save default image
             if (isset($_FILES['filename']['name']) && $_FILES['filename']['name'] != '') {
@@ -173,6 +173,7 @@ class Cammino_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Control
             // Ao mandar uma variavel vazia estava salvando o valor no banco de 0000-00-00 00:00:00, entao caso for vazio forçamos o valor NULL.
             $data['start_at'] = empty($data['start_at']) ? null : $data['start_at'];
             $data['end_at']   = empty($data['end_at']) ? null : $data['end_at'];
+            $data['contador_end_at'] = empty($data['contador_end_at']) ? null : $data['contador_end_at'];
 
             $model = Mage::getModel('banners/banners');
             $model->setData($data)

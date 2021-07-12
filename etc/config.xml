@@ -10,7 +10,7 @@
 <config>
     <modules>
         <Cammino_Banners>
-            <version>0.2.0</version>
+            <version>0.3.0</version>
         </Cammino_Banners>
     </modules>
     <frontend>
