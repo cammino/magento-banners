@@ -66,20 +66,25 @@ class Cammino_Banners_Model_Banners extends Mage_Core_Model_Abstract
                 array('null' => true)
             )
         )
-            ->addFieldToFilter(
-                'end_at',
-                array(
-                    array('gteq' => $now),
-                    array('null' => true)
-                )
-            );
+        ->addFieldToFilter(
+            'end_at',
+            array(
+                array('gteq' => $now),
+                array('null' => true)
+            )
+        );
 
         if (!empty($limit)) {
             $slides->setPageSize($limit)
                 ->setCurPage(1);
         }
 
-        $slidesArray = $slides->load();
+        if ($area == 'contador') {
+            $slidesArray = $slides->load()->getLastItem();
+        }
+        else {
+            $slidesArray = $slides->load();
+        }
 
         // Filtra os banners se estiver com modo multi loja habilitado
         if (!Mage::app()->isSingleStoreMode()) {
